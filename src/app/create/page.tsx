@@ -10,6 +10,7 @@ interface FormData {
   phoneNumber: string
   email: string
   message: string
+  scheduledDateTime?: string
 }
 
 export default function CreateCallPage() {
@@ -62,6 +63,7 @@ export default function CreateCallPage() {
             child_info: parsedData.message,
             phone_number: parsedData.phoneNumber,
             father_email: parsedData.email,
+            scheduled_at: parsedData.scheduledDateTime || null,
           })
 
         if (insertError) {
@@ -81,6 +83,7 @@ export default function CreateCallPage() {
             child_name: parsedData.childName,
             child_info: parsedData.message,
             phone_number: parsedData.phoneNumber,
+            scheduled_date: parsedData.scheduledDateTime,
           }),
         })
 
@@ -164,6 +167,22 @@ export default function CreateCallPage() {
     )
   }
 
+  // Format the scheduled date for display
+  const formatScheduledDate = (isoDate: string | undefined) => {
+    if (!isoDate) return null
+    const date = new Date(isoDate)
+    return date.toLocaleDateString('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  const scheduledDisplay = formatScheduledDate(formData?.scheduledDateTime)
+
   return (
     <main className={styles.main}>
       <div className={styles.card} style={{ maxWidth: '500px', margin: '2rem auto', textAlign: 'center' }}>
@@ -173,8 +192,34 @@ export default function CreateCallPage() {
         </h2>
         <p style={{ color: '#666', marginBottom: '1.5rem', lineHeight: '1.6' }}>
           Santa tiene todos los detalles de <strong>{formData?.childName}</strong> y 
-          pronto recibirás una llamada mágica al número <strong>{formData?.phoneNumber}</strong>.
+          {scheduledDisplay ? ' recibirá' : ' pronto recibirá'} una llamada mágica al número <strong>{formData?.phoneNumber}</strong>.
         </p>
+
+        {scheduledDisplay ? (
+          <div style={{ 
+            backgroundColor: '#fff8e1', 
+            padding: '1rem', 
+            borderRadius: '12px',
+            marginBottom: '1rem',
+            border: '2px solid #ffe082'
+          }}>
+            <p style={{ color: '#f57c00', margin: 0, fontWeight: 600 }}>
+              📅 {scheduledDisplay}
+            </p>
+          </div>
+        ) : (
+          <div style={{ 
+            backgroundColor: '#e3f2fd', 
+            padding: '1rem', 
+            borderRadius: '12px',
+            marginBottom: '1rem',
+            border: '2px solid #90caf9'
+          }}>
+            <p style={{ color: '#1565c0', margin: 0, fontWeight: 600 }}>
+              📞 ¡Santa llamará en los próximos minutos!
+            </p>
+          </div>
+        )}
         
         <div style={{ 
           backgroundColor: '#f0f9f0', 

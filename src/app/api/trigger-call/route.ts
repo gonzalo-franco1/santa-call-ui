@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
     // Parse request body
     const body = await request.json()
-    const { child_name, child_info, phone_number } = body
+    const { child_name, child_info, phone_number, scheduled_date } = body
 
     if (!child_name || !child_info || !phone_number) {
       return NextResponse.json(
@@ -28,8 +28,9 @@ export async function POST(request: Request) {
     }
 
     // Call HappyRobot webhook
+    // Use scheduled_date if provided, otherwise use current date
     const webhookPayload = {
-      date: new Date().toISOString(),
+      date: scheduled_date || new Date().toISOString(),
       child_name,
       child_info,
       phone_number,

@@ -9,17 +9,31 @@ export default function Home() {
   const [childName, setChildName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [message, setMessage] = useState('')
+  const [scheduledDate, setScheduledDate] = useState('')
+  const [scheduledTime, setScheduledTime] = useState('')
   const router = useRouter()
+
+  // Get minimum date (today) and maximum date (Dec 31)
+  const today = new Date()
+  const minDate = today.toISOString().split('T')[0]
+  const maxDate = `${today.getFullYear()}-12-31`
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Combine date and time into a single ISO string
+    let scheduledDateTime = ''
+    if (scheduledDate && scheduledTime) {
+      scheduledDateTime = new Date(`${scheduledDate}T${scheduledTime}`).toISOString()
+    }
     
     // Save form data to localStorage to retrieve it after login/signup
     if (typeof window !== 'undefined') {
       localStorage.setItem('santaCall_formData', JSON.stringify({
         childName,
         phoneNumber,
-        message
+        message,
+        scheduledDateTime
       }))
     }
 
@@ -136,6 +150,43 @@ export default function Home() {
                 onChange={(e) => setMessage(e.target.value)}
                 required
               />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>
+                📅 ¿Cuándo quieres que Santa llame? <span style={{ fontWeight: 400, color: '#888', fontSize: '0.9rem' }}>(opcional)</span>
+              </label>
+              <p style={{ marginBottom: '0.75rem', fontSize: '0.9rem', color: '#666' }}>
+                Si no eliges fecha, Santa llamará en los próximos minutos.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <label htmlFor="scheduledDate" style={{ fontSize: '0.85rem', color: '#888', marginBottom: '0.25rem', display: 'block' }}>
+                    Fecha
+                  </label>
+                  <input
+                    id="scheduledDate"
+                    type="date"
+                    className={styles.input}
+                    value={scheduledDate}
+                    onChange={(e) => setScheduledDate(e.target.value)}
+                    min={minDate}
+                    max={maxDate}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="scheduledTime" style={{ fontSize: '0.85rem', color: '#888', marginBottom: '0.25rem', display: 'block' }}>
+                    Hora
+                  </label>
+                  <input
+                    id="scheduledTime"
+                    type="time"
+                    className={styles.input}
+                    value={scheduledTime}
+                    onChange={(e) => setScheduledTime(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
             <button type="submit" className={styles.button}>
