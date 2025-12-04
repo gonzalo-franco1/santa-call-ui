@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../page.module.css'
 
@@ -12,7 +12,18 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
+
+  // Get redirect destination from URL params
+  const redirectTo = searchParams.get('redirect')
+
+  const getRedirectUrl = () => {
+    if (redirectTo === 'create') {
+      return '/create'
+    }
+    return '/'
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,7 +38,7 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      router.push('/')
+      router.push(getRedirectUrl())
       router.refresh()
     } catch (err: any) {
       setError(err.message || 'An error occurred')
@@ -41,10 +52,15 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      // Include redirect info in the callback URL
+      const callbackUrl = redirectTo 
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(getRedirectUrl())}`
+        : `${window.location.origin}/auth/callback`
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: callbackUrl,
         },
       })
 
@@ -181,7 +197,7 @@ export default function LoginPage() {
 
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: '#666' }}>
           ¿No tienes cuenta?{' '}
-          <Link href="/signup" style={{ color: 'var(--santa-red)', textDecoration: 'underline' }}>
+          <Link href={`/signup${redirectTo ? `?redirect=${redirectTo}` : ''}`} style={{ color: 'var(--santa-red)', textDecoration: 'underline' }}>
             Regístrate aquí
           </Link>
         </p>
