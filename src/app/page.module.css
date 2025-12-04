@@ -1,0 +1,122 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--santa-red) 0%, var(--santa-dark-red) 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-bottom-left-radius: 50% 20px;
+  border-bottom-right-radius: 50% 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.title {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.content {
+  flex: 1;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 2px solid #f0f0f0;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 1.1rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  min-height: 150px;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--christmas-green);
+}
+
+.button {
+  background-color: var(--christmas-green);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  width: 100%;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 15px rgba(22, 91, 51, 0.3);
+}
+
+.button:hover {
+  background-color: #124a2a;
+  transform: translateY(-2px);
+}
+
+/* Features Section Styles */
+.features {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.features > div {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+}
+
+.featureIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f0f0f0;
+  color: #666;
+  margin-top: auto;
+}

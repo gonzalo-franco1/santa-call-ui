@@ -1,0 +1,42 @@
+:root {
+  --santa-red: #D42426;
+  --santa-dark-red: #A41315;
+  --christmas-green: #165B33;
+  --snow-white: #F8F9FA;
+  --gold: #FFD700;
+  --gold-accent: #F8B229;
+  --text-dark: #1A1A1A;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--snow-white);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+button {
+  cursor: pointer;
+}
+
+.christmas-gradient {
+  background: linear-gradient(135deg, var(--santa-red) 0%, var(--santa-dark-red) 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
