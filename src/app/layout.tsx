@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import Header from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Santa Call',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   )
 }

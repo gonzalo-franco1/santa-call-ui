@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -56,9 +57,9 @@ export default function Home() {
               />
             </div>
 
-            <button type="button" className={styles.button}>
+            <Link href="/login" className={styles.button} style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
               Programar Llamada con Santa 🎄
-            </button>
+            </Link>
           </form>
         </div>
       </div>

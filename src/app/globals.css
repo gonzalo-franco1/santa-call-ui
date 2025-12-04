@@ -1,11 +1,13 @@
 :root {
   --santa-red: #D42426;
-  --santa-dark-red: #A41315;
-  --christmas-green: #165B33;
-  --snow-white: #F8F9FA;
+  --santa-dark-red: #8B0000;
+  --christmas-green: #2F5233;
+  --christmas-light-green: #4A7C59;
+  --snow-white: #FAFAFA;
   --gold: #FFD700;
-  --gold-accent: #F8B229;
-  --text-dark: #1A1A1A;
+  --gold-accent: #DAA520;
+  --text-dark: #2D3436;
+  --text-light: #636E72;
 }
 
 * {
@@ -15,28 +17,17 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--snow-white);
   color: var(--text-dark);
   line-height: 1.6;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-weight: 700;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 button {
   cursor: pointer;
 }
-
-.christmas-gradient {
-  background: linear-gradient(135deg, var(--santa-red) 0%, var(--santa-dark-red) 100%);
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
