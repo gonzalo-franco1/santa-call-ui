@@ -8,7 +8,6 @@ import styles from './page.module.css'
 export default function Home() {
   const [childName, setChildName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
 
@@ -20,7 +19,6 @@ export default function Home() {
       localStorage.setItem('santaCall_formData', JSON.stringify({
         childName,
         phoneNumber,
-        email,
         message
       }))
     }
@@ -120,21 +118,6 @@ export default function Home() {
                   required
                 />
               </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>
-                Tu email
-              </label>
-              <input
-                id="email"
-                type="email"
-                className={styles.input}
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
             </div>
 
             <div className={styles.formGroup}>
