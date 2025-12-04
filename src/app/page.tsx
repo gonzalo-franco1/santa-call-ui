@@ -1,7 +1,30 @@
-import Link from 'next/link'
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 
 export default function Home() {
+  const [childName, setChildName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [message, setMessage] = useState('')
+  const router = useRouter()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Save form data to localStorage to retrieve it after login/signup
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('santaCall_formData', JSON.stringify({
+        childName,
+        phoneNumber,
+        message
+      }))
+    }
+
+    router.push('/login?redirect=create')
+  }
+
   return (
     <main className={styles.main}>
       {/* Hero Section */}
@@ -41,25 +64,60 @@ export default function Home() {
             Configura tu Llamada Mágica
           </h2>
           
-          <form>
+          <form onSubmit={handleSubmit}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+              <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                <label htmlFor="childName" className={styles.label}>
+                  Nombre del niño/a
+                </label>
+                <input
+                  id="childName"
+                  type="text"
+                  className={styles.input}
+                  placeholder="Ej: Leo"
+                  value={childName}
+                  onChange={(e) => setChildName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className={styles.formGroup} style={{ marginBottom: 0 }}>
+                <label htmlFor="phoneNumber" className={styles.label}>
+                  Teléfono a llamar
+                </label>
+                <input
+                  id="phoneNumber"
+                  type="tel"
+                  className={styles.input}
+                  placeholder="+34 600 000 000"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
             <div className={styles.formGroup}>
               <label htmlFor="childInfo" className={styles.label}>
                 Cuéntale a Santa sobre tu hijo/a
               </label>
               <p style={{ marginBottom: '0.5rem', fontSize: '0.9rem', color: '#666' }}>
-                Incluye su nombre, edad, mejores amigos, regalos que quiere, 
+                Incluye su edad, mejores amigos, regalos que quiere, 
                 y algo bueno que haya hecho este año.
               </p>
               <textarea
                 id="childInfo"
                 className={styles.textarea}
-                placeholder="Ej: Se llama Leo, tiene 5 años. Este año aprendió a andar en bici sin rueditas. Su mejor amigo es Nico. Quiere un set de legos..."
+                placeholder="Ej: Tiene 5 años. Este año aprendió a andar en bici sin rueditas. Su mejor amigo es Nico. Quiere un set de legos..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
               />
             </div>
 
-            <Link href="/login" className={styles.button} style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
+            <button type="submit" className={styles.button}>
               Programar Llamada con Santa 🎄
-            </Link>
+            </button>
           </form>
         </div>
       </div>
