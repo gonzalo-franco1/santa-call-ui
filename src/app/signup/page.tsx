@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../page.module.css'
 
-export default function SignupPage() {
+function SignupContent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -15,7 +15,6 @@ export default function SignupPage() {
   const searchParams = useSearchParams()
   const supabase = createClient()
 
-  // Get redirect destination from URL params
   const redirectTo = searchParams.get('redirect')
 
   const getRedirectUrl = () => {
@@ -216,6 +215,20 @@ export default function SignupPage() {
         </p>
       </div>
     </main>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <main className={styles.main}>
+        <div className={styles.card} style={{ maxWidth: '400px', margin: '2rem auto', textAlign: 'center' }}>
+          <p>Cargando...</p>
+        </div>
+      </main>
+    }>
+      <SignupContent />
+    </Suspense>
   )
 }
 
