@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../page.module.css'
 
@@ -12,7 +12,18 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
+
+  // Get redirect destination from URL params
+  const redirectTo = searchParams.get('redirect')
+
+  const getRedirectUrl = () => {
+    if (redirectTo === 'create') {
+      return '/create'
+    }
+    return '/'
+  }
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,11 +31,16 @@ export default function SignupPage() {
     setError(null)
 
     try {
+      // Include redirect info in the callback URL
+      const callbackUrl = redirectTo 
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(getRedirectUrl())}`
+        : `${window.location.origin}/auth/callback`
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: callbackUrl,
         },
       })
 
@@ -32,7 +48,7 @@ export default function SignupPage() {
 
       // Show success message
       alert('¡Registro exitoso! Por favor verifica tu email para confirmar tu cuenta.')
-      router.push('/login')
+      router.push(`/login${redirectTo ? `?redirect=${redirectTo}` : ''}`)
     } catch (err: any) {
       setError(err.message || 'An error occurred')
     } finally {
@@ -45,10 +61,15 @@ export default function SignupPage() {
     setError(null)
 
     try {
+      // Include redirect info in the callback URL
+      const callbackUrl = redirectTo 
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(getRedirectUrl())}`
+        : `${window.location.origin}/auth/callback`
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: callbackUrl,
         },
       })
 
@@ -189,7 +210,7 @@ export default function SignupPage() {
 
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: '#666' }}>
           ¿Ya tienes cuenta?{' '}
-          <Link href="/login" style={{ color: 'var(--santa-red)', textDecoration: 'underline' }}>
+          <Link href={`/login${redirectTo ? `?redirect=${redirectTo}` : ''}`} style={{ color: 'var(--santa-red)', textDecoration: 'underline' }}>
             Inicia sesión aquí
           </Link>
         </p>
