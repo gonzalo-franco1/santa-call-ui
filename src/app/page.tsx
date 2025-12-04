@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -29,13 +30,35 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {/* Hero Section */}
-      <div className={styles.hero}>
-        <h1 className={styles.title}>🎅 Santa Call</h1>
-        <p className={styles.subtitle}>
-          Haz que la magia de la Navidad cobre vida. 
-          Sorprende a tus hijos con una llamada personalizada de Santa Claus.
-        </p>
+      {/* Hero with Background Image */}
+      <div className={styles.heroWrapper}>
+        <Image 
+          src="/images/santa_claus_and_children_ultrawide.png" 
+          alt="Santa Claus con niños celebrando la Navidad" 
+          fill
+          className={styles.heroBackgroundImage}
+          quality={100}
+          priority
+        />
+        
+        <div className={styles.heroOverlay}>
+          <div className={styles.heroLogoWrapper}>
+            <Image 
+              src="/images/logo.jpg" 
+              alt="Santa Call Logo" 
+              width={200} 
+              height={200} 
+              className={styles.heroLogo}
+              priority
+            />
+          </div>
+          <div className={styles.heroContentBox}>
+            <p className={styles.subtitle}>
+              Haz que la magia de la Navidad cobre vida. 
+              Sorprende a tus hijos con una llamada personalizada de Santa Claus.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
