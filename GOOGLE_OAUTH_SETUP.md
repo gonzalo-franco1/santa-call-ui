@@ -13,7 +13,7 @@ To enable Google sign-in, you need to configure Google OAuth in your Supabase pr
 5. Choose **Web application**
 6. Add authorized redirect URIs:
    - `https://zxpenxanwyctuxtxmveg.supabase.co/auth/v1/callback`
-   - For local development: `http://localhost:3000/auth/callback`
+   - For local development: `g `
 7. Copy the **Client ID** and **Client Secret**
 
 ### 2. Configure in Supabase
