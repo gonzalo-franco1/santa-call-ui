@@ -19,6 +19,18 @@ export default function CreateCallPage() {
   const router = useRouter()
   const supabase = createClient()
 
+  // Secret key binding: press "p" to access the presents page
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'p') {
+        router.push('/presents')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [router])
+
   useEffect(() => {
     const createSantaCall = async () => {
       try {
