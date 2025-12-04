@@ -2,27 +2,42 @@
 
 Web app para configurar llamadas de Santa Claus para niños.
 
-## Requisitos
+## Setup
 
-- Node.js 18+
+1. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-## Instalación
+2. **Configurar variables de entorno:**
+   Crear `.env.local` con:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://zxpenxanwyctuxtxmveg.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+   ```
 
-```bash
-npm install
-```
+3. **Ejecutar migración de base de datos:**
+   ```bash
+   DB_PASSWORD=SantaCallDBPass npm run migrate
+   ```
 
-## Desarrollo
+4. **Iniciar desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-```
+## Estructura
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+- `src/lib/supabase/` - Clientes de Supabase (cliente/servidor)
+- `src/lib/auth.ts` - Helpers de autenticación
+- `src/lib/db.ts` - Operaciones de base de datos
+- `src/app/login/` - Página de login (con Google OAuth)
+- `src/app/signup/` - Página de registro (con Google OAuth)
+- `database-schema.sql` - Schema de la base de datos
 
-## Producción
+## Google OAuth
 
-```bash
-npm run build
-npm start
-```
+Para habilitar login con Google:
+1. Crear credenciales OAuth en Google Cloud Console
+2. Configurar en Supabase Dashboard → Authentication → Providers → Google
+3. Ver `GOOGLE_OAUTH_SETUP.md` para detalles

@@ -72,6 +72,21 @@
   border-color: var(--christmas-green);
 }
 
+.input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--christmas-green);
+}
+
 .button {
   background-color: var(--christmas-green);
   color: white;
