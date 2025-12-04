@@ -59,6 +59,27 @@ export default function CreateCallPage() {
           return
         }
 
+        // Trigger the Santa call via HappyRobot API
+        const triggerResponse = await fetch('/api/trigger-call', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            child_name: parsedData.childName,
+            child_info: parsedData.message,
+            phone_number: parsedData.phoneNumber,
+          }),
+        })
+
+        if (!triggerResponse.ok) {
+          const triggerError = await triggerResponse.json()
+          console.error('Error triggering call:', triggerError)
+          // We don't fail the whole process if the call trigger fails
+          // The data is already saved, we can retry the call later
+          console.warn('Call trigger failed, but data was saved successfully')
+        }
+
         // Clear localStorage after successful submission
         localStorage.removeItem('santaCall_formData')
         setStatus('success')
